@@ -61,6 +61,7 @@ function Login() {
                     placeholder="Enter Email"
                     name="email"
                     label="Email: "
+                    value={values.email}
                     onChange={(e) => handleChange(e)}
 
                 />
@@ -69,6 +70,7 @@ function Login() {
                     placeholder="Enter Password"
                     name="password"
                     label="password: "
+                    value={values.password}
                     onChange={(e) => handleChange(e)}
                 />
                 {!loading ? (

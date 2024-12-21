@@ -2,7 +2,7 @@ import conf from "../envImport/conf";
 import {Client, Account, ID} from 'appwrite'
 
  class AuthService {
-    client = new Client;
+    client = new Client();
     account 
 
     constructor() {
@@ -34,7 +34,6 @@ import {Client, Account, ID} from 'appwrite'
     async getCurrentUser() {
         try {
             const user = await this.account.get()
-
             if (user) {
                 return user;
             } else {

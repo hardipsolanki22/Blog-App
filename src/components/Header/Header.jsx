@@ -49,7 +49,7 @@ function Header() {
           navItems.map((item) => (
             item.active ? (
                 <li key={item.name}>
-                  <button onClick={() => navigate(item.slug)}>
+                  <button onClick={() => navigate(item.slug)}>  
                     {item.name}
                   </button>
                 </li>
