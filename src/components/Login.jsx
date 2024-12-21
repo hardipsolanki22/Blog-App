@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Input from './Input'
 import Button from './Button'
-import aurhService from '../appWrite/auth'
+import authService from '../appWrite/auth'
 import { useDispatch } from 'react-redux'
 import { login } from '../featured/auth/authSlice'
 import { Link, useNavigate } from 'react-router-dom'
@@ -22,19 +22,28 @@ function Login() {
         })
     }
 
+    console.log(`values : ${JSON.stringify(values)}`);
+    console.log(`error : ${JSON.stringify(error)}`);
+    
+
     const loginHandler = async (e) => {
+        e.preventDefault()
         try {
             setError("")
             setLoading(true)
-            e.preventDefualt()
-            const session = await aurhService.login({ email: values.email, password: values.password})
+            const session = await authService.login({email: values.email, password: values.password})
+            console.log(`session: ${JSON.stringify(session)}`);
+            
             if (session) {
-                const userData = await aurhService.getCurrentUser()
-                dispatch(login({ userData }))
-                navigate('/')
+                const userData = await authService.getCurrentUser()
+                console.log(`userData: ${JSON.stringify(userData)}`);
+                if (userData) {
+                    dispatch(login({userData}))
+                    navigate("/")
+                }
             }
         } catch (error) {
-            setError(error)
+            setError(error.message)
         } finally {
             setLoading(false)
         }
@@ -44,9 +53,9 @@ function Login() {
 
 
     return (
-        <div>
+        <div className='w-full bg-slate-600'>
             <div>
-                <h2>Login Your Acount</h2>
+                <h2 className='text-white font-semibold'>Login Your Acount</h2>
                 <p>
                     Do you have no account
                     <Link to={'/signup'}>
@@ -74,7 +83,7 @@ function Login() {
                     onChange={(e) => handleChange(e)}
                 />
                 {!loading ? (
-                    <Button>
+                    <Button type='submit'>
                         Login
                     </Button>
                 ) : <p>Loading</p>

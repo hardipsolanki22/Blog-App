@@ -10,11 +10,12 @@ function LogoutBtn() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const logoutHandler = async () => {
-    const userLogout = await authService.logout()
-    if (userLogout) {
-      dispatch(logout())
-    }
+  const logoutHandler = () => {
+      authService.logout()
+      .then(() => {
+        dispatch(logout())
+        navigate("/login")
+      })
 
   }
   return (

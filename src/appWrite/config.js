@@ -2,7 +2,7 @@ import conf from "../envImport/conf";
 import { Client, Account, ID, Databases, Storage, Query } from 'appwrite'
 
 export class Service {
-    client = new Client
+    client = new Client()
     databases;
     bucket;
 
@@ -106,7 +106,7 @@ export class Service {
                 file
             )
         } catch (error) {
-            console.log('Appwrite service :: uploadFile :: error' , error);
+            console.log('Appwrite service :: uploadFile :: error' , error.message);
             return false
         }
     }

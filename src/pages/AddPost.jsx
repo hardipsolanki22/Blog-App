@@ -4,7 +4,7 @@ import PostForm from '../components/PostForm/PostForm'
 
 function AddPost() {
   return (
-    <div>
+    <div className='w-full bg-slate-800 text-black'>
       <Container>
         <PostForm/>
       </Container>

@@ -10,7 +10,7 @@ const Input = React.forwardRef(function Input({
     
     const id = useId()
     return (
-        <div className={'w-full'}>
+        <div className={'w-full m-4'}>
             {label && <label 
             htmlFor={id}>
                 {label}
@@ -18,7 +18,7 @@ const Input = React.forwardRef(function Input({
             <input 
             className={`${className}`}
             type={type} 
-            placeholder={placeholder}
+            placeholder={type !== "file" ? placeholder : ""}
             id={id} 
             ref={ref}
             {...props}

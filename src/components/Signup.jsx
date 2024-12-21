@@ -29,30 +29,31 @@ function Signup() {
                 navigate('/login')
             }
         } catch (error) {
-            setError(error)
+            setError(error.message)
         } finally {
             setLoading(false)
         }
     }
 
     return (
-        <div>
+        <div className='bg-slate-600'>
             <div>
-                <h2>Signup Your Acount</h2>
+                <h2 className='text-white font-semibold'>Signup Your Acount</h2>
                 <p>
                     Do you have account
                     <Link to={'/login'}>
-                        Signup
+                        Login
                     </Link>
                 </p>
             </div>
             {error && <p>{error}</p>}
-            <form onSubmit={signupHandler}>
+            <form onSubmit={signupHandler} method='post'>
                 <Input
                     type="text"
                     placeholder="Enter name"
                     name="name"
                     label="Name: "
+                    value={values.name}
                     onChange={(e) => handleChange(e)}
 
                 />
@@ -61,6 +62,7 @@ function Signup() {
                     placeholder="Enter Email"
                     name="email"
                     label="Email: "
+                    value={values.email}
                     onChange={(e) => handleChange(e)}
 
                 />
@@ -68,7 +70,8 @@ function Signup() {
                     type="password"
                     placeholder="Enter Password"
                     name="password"
-                    label="password: "
+                    label="Password: "
+                    value={values.password}
                     onChange={(e) => handleChange(e)}
                 />
                 {!loading ? (

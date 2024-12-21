@@ -32,10 +32,10 @@ function App() {
   
 
   return !loading ? (
-    <div className='container'>
+    <div className='w-full'>
       <div>
       <Header/>
-      TODO: {/* <Outlet/> */}
+       <Outlet/>
       <Footer/>
       </div>
     </div>
