@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import appWriteService from '../appWrite/config'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-export default function PostCart({ $id, title, featureImage }) {
-
-    const [imageUrl, setImageUrl] = useState('')
-    appWriteService.getFilePreview(featureImage)
-        .then((url) => setImageUrl(url))
-
+export default function PostCart({ $id, title, featuredimage,content}) {
 
     return (
         <Link to={`/posts/${$id}`}>
             <div>
                 <div>
-                    <img src={imageUrl} alt={title} />
+                    <img src={appWriteService.getFilePreview(featuredimage)} alt={title} />
                 </div>
-                <h2>{title}</h2>
+                <div>
+                    <p>{title}</p>
+                    <p>{content}</p>
+                </div>
+
             </div>
 
         </Link>

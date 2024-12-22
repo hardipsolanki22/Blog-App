@@ -7,11 +7,14 @@ function AllPosts() {
 
     const [posts, setPosts] = useState([])
 
+    console.log(`posts: ${posts}`);
+    
+
     useEffect(() => {
         postService.getPosts([])
             .then((posts) => {
                 if (posts) {
-                    setPosts(posts)
+                    setPosts(posts.documents)
                 }
             })
 
@@ -20,13 +23,11 @@ function AllPosts() {
     return (
         <div>
             <Container>
-                {posts?.map((post) => {
-                    return (
+                { posts && posts.map((post) => ((
                         <div key={post.$id}>
-                            <PostCart post={post} />
+                            <PostCart {...post} />
                         </div>
-                    )
-                })}
+                    )))}
             </Container>
 
         </div>

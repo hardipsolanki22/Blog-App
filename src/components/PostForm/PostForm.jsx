@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState ,useEffect} from 'react'
 import Input from '../Input'
 import Button from '../Button'
 import Select from '../Select'
@@ -8,45 +8,77 @@ import { useSelector } from 'react-redux'
 
 function PostForm({ post }) {
 
-    const userData = useSelector(state => state.auth.status)
+    const userData = useSelector(state => state.auth.userData)
     const navigate = useNavigate()
-    const [values, setValues] = useState({})
     const [error, setEror] = useState("")
+    const [fileUrl, setFileUrl] = useState(post && post.featuredimage && postService.getFilePreview(post?.featuredimage));
+    const [formData, setFormData] = useState({
+        title: "",
+        slug: "",
+        content: "",
+        status: "active",
+        featuredimage: null,
+        userId: userData ? userData.$id : ""
+    })
+    
+    
+        useEffect(() => {
+            if (post) {
+                setFormData({
+                    title: post.title || "",
+                    slug: post.slug || "",
+                    content: post.content || "",
+                    status: post.status || "active",
+                    featuredimage: post.featuredimage || null,
+                    userId: userData ? userData.$id : ""
+                })
+            }
+        }, [post, userData])
 
+
+    
     const handleChange = (e) => {
-        const { name, value, files} = e.target        
-
-        if (name === "featuredimage" && files) {
-            setValues({
-                ...values,
-                [name]: files[0]
-            })
-           
+        const { name, value, files } = e.target;
+        if (files) {
+            const file = files[0];
+            setFormData((prevValues) => ({
+                ...prevValues,
+                [name]: file
+            }));
+            setFileUrl(file);
         } else {
-            setValues({
-                ...values,
+            setFormData((prevValues) => ({
+                ...prevValues,
                 [name]: value
-            })
+            }));
         }
-    }
+        if (name === 'title') {
+            setFormData((prevValues) => ({
+                ...prevValues,
+                 slug: value
+                 .toLocaleLowerCase()
+                 .replace(/\s+/g, "-") 
+            }));
+        }
+    };
 
-    console.log(`values: ${JSON.stringify(values)}`);
+    console.log(`formData: ${JSON.stringify(formData)}`);
+    console.log(`fileUrl: ${fileUrl}`);
 
 
-
-    const postHandler = async(e) => {
+    const postHandler = async (e) => {
         console.log("|Clcik");
-        
         e.preventDefault()
         if (post) {
             try {
                 const data = {
                     title: post.title,
-                    description: post.description,
+                    slug: post.slug,
+                    content: post.content,
                     status: post.status,
                     featuredimage: post.featuredimage
                 }
-                const file = values.featuredimage ? await postService.uploadFile(values.featuredimage) : null
+                const file = fileUrl && await postService.uploadFile(fileUrl)
                 if (file) {
                     await postService.deleteFile(post.featuredimage)
                 }
@@ -64,34 +96,34 @@ function PostForm({ post }) {
 
         } else {
             try {
-                const fileUpload = values.featuredimage && await postService.uploadFile(values.featuredimage)
                 const data = {
-                    title: values.title,
-                    description: values.description,
-                    status: values.status,
-                    featuredimage: values.featuredimage
+                    title: formData.title,
+                    slug: formData.slug,
+                    content: formData.content,
+                    status: formData.status,
+                    featuredimage: formData.featuredimage
                 }
+
+                const fileUpload = fileUrl && await postService.uploadFile(fileUrl)
                 if (fileUpload) {
-                    const post = await postService.addPost({
+                    const post = await postService.createPost({
                         ...data,
                         featuredimage: fileUpload.$id,
                         userId: userData.$id
                     })
+                    console.log(`fileUpload: ${fileUpload}`);
+                    console.log(`PostCreate: ${post}`);
 
                     if (post) {
-                        navigate(`posts/${post.$id}`)
+                        navigate("/")
                     }
                 }
             } catch (error) {
                 setEror(error.message)
             }
-
         }
-
-
-
-
     }
+
     return (
         <div>
             <div>
@@ -104,21 +136,29 @@ function PostForm({ post }) {
                     placeholder="Enter Title"
                     name="title"
                     label="Title: "
-                    value={post ? post.title : values.title}
+                    value={formData.title}
                     onChange={handleChange}
                 />
                 <Input
                     type="text"
+                    placeholder="slug"
+                    name="slug"
+                    label="Slug: "
+                    value={formData.slug}
+                    readOnly={true}
+                />
+                <Input
+                    type="text"
                     placeholder="Enter Description"
-                    name="description"
-                    label="Descripiton: "
-                    value={post ? post.description : values.description}
+                    name="content"
+                    label="Content: "
+                    value={formData.content}
                     onChange={handleChange}
                 />
-                {post &&
+                {fileUrl &&
                     <img
-                        src={postService.getFilePreview(post.featuredimage)}
-                        alt={postService.getFilePreview(post.title)}
+                        src={fileUrl}
+                        alt={"Feartured"}
                     />
                 }
                 <Input
@@ -132,15 +172,16 @@ function PostForm({ post }) {
                     opations={["active", "inactive"]}
                     label="Status: "
                     name="status"
-                    value={values.status}
+                    value={formData.status}
                     onChange={handleChange}
                 />
-                <button type='submit' onClick={postHandler}>
+                <Button type='submit' onClick={postHandler}>
                     {post ? "Update" : "Submit"}
-                </button>
+                </Button>
             </form>
         </div>
     )
 }
 
 export default PostForm
+

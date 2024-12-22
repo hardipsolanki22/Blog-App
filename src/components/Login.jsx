@@ -16,10 +16,10 @@ function Login() {
     const [values, setValues] = useState({})
 
     const handleChange = (e) => {
-        setValues({
-            ...values,
+        setValues((prevValues) => ({
+            ...prevValues,
             [e.target.name]: e.target.value
-        })
+        }))
     }
 
     console.log(`values : ${JSON.stringify(values)}`);

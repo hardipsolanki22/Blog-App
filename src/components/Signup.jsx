@@ -12,10 +12,10 @@ function Signup() {
     const navigate = useNavigate()
 
     const handleChange = (e) => {
-        setValues({
-            ...values,
+        setValues((prevValues) => ({
+            ...prevValues,
             [e.target.name]: e.target.value
-        })
+        }))
     }
 
     const signupHandler = async(e) => {
