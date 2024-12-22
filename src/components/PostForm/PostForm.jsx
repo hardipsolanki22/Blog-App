@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Input from '../Input'
 import Button from '../Button'
 import Select from '../Select'
@@ -11,7 +11,6 @@ function PostForm({ post }) {
     const userData = useSelector(state => state.auth.userData)
     const navigate = useNavigate()
     const [error, setEror] = useState("")
-    const [fileUrl, setFileUrl] = useState(post && post.featuredimage && postService.getFilePreview(post?.featuredimage));
     const [formData, setFormData] = useState({
         title: "",
         slug: "",
@@ -20,23 +19,21 @@ function PostForm({ post }) {
         featuredimage: null,
         userId: userData ? userData.$id : ""
     })
-    
-    
-        useEffect(() => {
-            if (post) {
-                setFormData({
-                    title: post.title || "",
-                    slug: post.slug || "",
-                    content: post.content || "",
-                    status: post.status || "active",
-                    featuredimage: post.featuredimage || null,
-                    userId: userData ? userData.$id : ""
-                })
-            }
-        }, [post, userData])
 
 
-    
+    useEffect(() => {
+        if (post) {
+            setFormData({
+                title: post.title || "",
+                slug: post.slug || "",
+                content: post.content || "",
+                status: post.status || "active",
+                featuredimage: post.featuredimage || null,
+                userId: userData ? userData.$id : ""
+            })
+        }
+    }, [post, userData])
+
     const handleChange = (e) => {
         const { name, value, files } = e.target;
         if (files) {
@@ -45,7 +42,6 @@ function PostForm({ post }) {
                 ...prevValues,
                 [name]: file
             }));
-            setFileUrl(file);
         } else {
             setFormData((prevValues) => ({
                 ...prevValues,
@@ -55,43 +51,39 @@ function PostForm({ post }) {
         if (name === 'title') {
             setFormData((prevValues) => ({
                 ...prevValues,
-                 slug: value
-                 .toLocaleLowerCase()
-                 .replace(/\s+/g, "-") 
+                slug: value
+                    .toLocaleLowerCase()
+                    .replace(/\s+/g, "-")
             }));
         }
     };
 
-    console.log(`formData: ${JSON.stringify(formData)}`);
-    console.log(`fileUrl: ${fileUrl}`);
-
-
     const postHandler = async (e) => {
-        console.log("|Clcik");
+        setEror("")
         e.preventDefault()
         if (post) {
             try {
                 const data = {
-                    title: post.title,
-                    slug: post.slug,
-                    content: post.content,
-                    status: post.status,
-                    featuredimage: post.featuredimage
+                    title: formData.title,
+                    slug: formData.slug,
+                    content: formData.content,
+                    status: formData.status,
+                    featuredimage: formData.featuredimage
                 }
-                const file = fileUrl && await postService.uploadFile(fileUrl)
+                const file = formData.featuredimage.type !== "string." ? await postService.uploadFile(formData.featuredimage) : null
                 if (file) {
                     await postService.deleteFile(post.featuredimage)
                 }
-                const post = await postService.updatePost(post.$id, {
+                const editedPost = await postService.updatePost(post.$id, {
                     ...data,
-                    featuredimage: file ? file.$id : post.$id
+                    featuredimage: file ? file.$id : post.featuredimage
                 }
                 )
-                if (post) {
-                    navigate(`/posts/${post.$id}`)
+                if (editedPost) {
+                    navigate(`/posts/${editedPost.slug}`)
                 }
             } catch (error) {
-                setEror(error)
+                setEror(error.message)
             }
 
         } else {
@@ -104,7 +96,7 @@ function PostForm({ post }) {
                     featuredimage: formData.featuredimage
                 }
 
-                const fileUpload = fileUrl && await postService.uploadFile(fileUrl)
+                const fileUpload = formData.featuredimage && await postService.uploadFile(formData.featuredimage)
                 if (fileUpload) {
                     const post = await postService.createPost({
                         ...data,
@@ -112,8 +104,6 @@ function PostForm({ post }) {
                         userId: userData.$id
                     })
                     console.log(`fileUpload: ${fileUpload}`);
-                    console.log(`PostCreate: ${post}`);
-
                     if (post) {
                         navigate("/")
                     }
@@ -125,7 +115,7 @@ function PostForm({ post }) {
     }
 
     return (
-        <div>
+        <div className='w-full bg-gray-600 text-black'>
             <div>
                 <h2>PostForm</h2>
                 {error && <p className='text-red-600'>{error}</p>}
@@ -155,11 +145,12 @@ function PostForm({ post }) {
                     value={formData.content}
                     onChange={handleChange}
                 />
-                {fileUrl &&
+                {post && post.featuredimage ? (<div>
                     <img
-                        src={fileUrl}
+                        src={postService.getFilePreview(post.featuredimage)}
                         alt={"Feartured"}
                     />
+                </div>) : null
                 }
                 <Input
                     type="file"

@@ -6,8 +6,9 @@ import PostCart from '../components/PostCart'
 function AllPosts() {
 
     const [posts, setPosts] = useState([])
+    const [loader, setLoader] = useState(true)
 
-    console.log(`posts: ${posts}`);
+    console.log(`loaer: ${loader}`);
     
 
     useEffect(() => {
@@ -17,10 +18,10 @@ function AllPosts() {
                     setPosts(posts.documents)
                 }
             })
-
+        setLoader(false)
     }, [])
 
-    return (
+    return !loader ? (
         <div>
             <Container>
                 { posts && posts.map((post) => ((
@@ -31,7 +32,9 @@ function AllPosts() {
             </Container>
 
         </div>
-    )
+    ) : (<>
+    <h1 className='text-black font-semibold'>Loader...</h1>
+    </>)
 }
 
 export default AllPosts

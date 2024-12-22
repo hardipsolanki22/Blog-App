@@ -7,11 +7,9 @@ import { useSelector } from 'react-redux'
 function Home() {
 
     const [posts, setPosts] = useState([])
+    const [loader, setLoader] = useState(true)
 
     const isLogedIn = useSelector(state => state.auth.status)
-
-    console.log(`isLogedIn: ${isLogedIn}`);
-
 
     useEffect(() => {
         postSevice.getPosts()
@@ -20,24 +18,23 @@ function Home() {
                     setPosts(posts.documents)
                 }
             })
+        setLoader(false)
     }, [])
 
 
     if (isLogedIn) {
         return (
-            (posts.length > 0) ? (<div>
+            !loader ? (<div>
                 <Container>
                     {posts.map((post) => (
-                        <div key={post}>
-                            <PostCard post={post} />
+                        <div key={post.$id}>
+                            <PostCard {...post} />
                         </div>
                     ))}
                 </Container>
-            </div>) : (<div>
-                <Container>
-                    <h1 className='text-red-600'>No Posts Found</h1>
-                </Container>
-            </div>)
+            </div>) : (<>
+                <h1 className='text-black text-2xl'>Loding...</h1>
+            </>)
         )
     } else {
         return (

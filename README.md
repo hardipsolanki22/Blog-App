@@ -10,7 +10,7 @@ This is a Blog Application built with React, Redux, and Appwrite. It allows user
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/your-username/BlogApp.git
+    git clone https://github.com/hardipsolanki22/BlogApp.git
     cd BlogApp
     ```
 
@@ -43,7 +43,3 @@ This is a Blog Application built with React, Redux, and Appwrite. It allows user
 
 This project is licensed under the Chai Aur Code YouTube channel.
 
-
-## Contact
-
-For any questions or inquiries, please contact [Chai Aur Code](https://www.youtube.com/channel/UCxyz).

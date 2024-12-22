@@ -33,49 +33,51 @@ function Post() {
     }
   }, [slug])
 
-  const deleteHandler = async () => {
-    const deletePost = await postService.deletePost(post.$id)
-    if (deletePost) {
-      const deleteFile = await postService.deleteFile(post.$id)
-      if (deleteFile) {
-        navigate("/")
-      }
-    }
+  const deleteHandler = () => {
+    postService.deletePost(post.$id)
+      .then(() => {
+        postService.deleteFile(post.$id)
+          .then(() => {
+            navigate("/")
+          })
+      })
+
   }
 
-  return !loader ? (<div>
-    <Container>
-      <div>
-        <div>
-          <img
-            src={post.featuredimage && postService.getFilePreview(post?.featuredimage)}
-            alt={post.title}
-          />
-        </div>
-        <div>
-          <p>{post.title}</p>
-          <p>{post.content}</p>
-        </div>
-        {isAuth &&
-          <div>
-            <div>
-              <Link to={`/edit-posts/${post.$id}`}>
-                <Button>
-                  Edit
-                </Button>
-              </Link>
-              <Button onClick={deleteHandler}>
-                Delete
-              </Button>
-            </div>
-          </div>
 
-        }
+return !loader ? (<div>
+  <Container>
+    <div>
+      <div>
+        <img
+          src={post.featuredimage && postService.getFilePreview(post?.featuredimage)}
+          alt={post.title}
+        />
       </div>
-    </Container>
-  </div>) : (<>
-    <h1>Loding...</h1>
-  </>)
+      <div>
+        <p>{post.title}</p>
+        <p>{post.content}</p>
+      </div>
+      {isAuth &&
+        <div>
+          <div>
+            <Link to={`/edit-posts/${post.$id}`}>
+              <Button>
+                Edit
+              </Button>
+            </Link>
+            <Button onClick={deleteHandler}>
+              Delete
+            </Button>
+          </div>
+        </div>
+
+      }
+    </div>
+  </Container>
+</div>) : (<>
+  <h1>Loding...</h1>
+</>)
 }
 
 export default Post
