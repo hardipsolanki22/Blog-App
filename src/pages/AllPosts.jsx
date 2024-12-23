@@ -8,8 +8,6 @@ function AllPosts() {
     const [posts, setPosts] = useState([])
     const [loader, setLoader] = useState(true)
 
-    console.log(`loaer: ${loader}`);
-    
 
     useEffect(() => {
         postService.getPosts([])
@@ -24,16 +22,16 @@ function AllPosts() {
     return !loader ? (
         <div>
             <Container>
-                { posts && posts.map((post) => ((
-                        <div key={post.$id}>
-                            <PostCart {...post} />
-                        </div>
-                    )))}
+                {posts && posts.map((post) => ((
+                    <div key={post.$id}>
+                        <PostCart {...post} />
+                    </div>
+                )))}
             </Container>
 
         </div>
     ) : (<>
-    <h1 className='text-black font-semibold'>Loader...</h1>
+        <h1 className='text-black font-semibold'>Loader...</h1>
     </>)
 }
 

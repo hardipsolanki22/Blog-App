@@ -12,13 +12,8 @@ function Post() {
   const [loader, setLoader] = useState(true)
 
 
-
-
   const userData = useSelector(state => state.auth.userData)
   const isAuth = post && userData ? post.userId === userData.$id : false
-
-  console.log(`isAuth: ${isAuth}`);
-  console.log(`Post: ${JSON.stringify(post)}`);
 
   useEffect(() => {
     if (slug) {
@@ -45,39 +40,39 @@ function Post() {
   }
 
 
-return !loader ? (<div>
-  <Container>
-    <div>
+  return !loader ? (<div>
+    <Container>
       <div>
-        <img
-          src={post.featuredimage && postService.getFilePreview(post?.featuredimage)}
-          alt={post.title}
-        />
-      </div>
-      <div>
-        <p>{post.title}</p>
-        <p>{post.content}</p>
-      </div>
-      {isAuth &&
         <div>
-          <div>
-            <Link to={`/edit-posts/${post.$id}`}>
-              <Button>
-                Edit
-              </Button>
-            </Link>
-            <Button onClick={deleteHandler}>
-              Delete
-            </Button>
-          </div>
+          <img
+            src={post.featuredimage && postService.getFilePreview(post?.featuredimage)}
+            alt={post.title}
+          />
         </div>
+        <div>
+          <p>{post.title}</p>
+          <p>{post.content}</p>
+        </div>
+        {isAuth &&
+          <div>
+            <div>
+              <Link to={`/edit-posts/${post.$id}`}>
+                <Button>
+                  Edit
+                </Button>
+              </Link>
+              <Button onClick={deleteHandler}>
+                Delete
+              </Button>
+            </div>
+          </div>
 
-      }
-    </div>
-  </Container>
-</div>) : (<>
-  <h1>Loding...</h1>
-</>)
+        }
+      </div>
+    </Container>
+  </div>) : (<>
+    <h1>Loding...</h1>
+  </>)
 }
 
 export default Post

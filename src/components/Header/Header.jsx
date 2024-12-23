@@ -12,7 +12,6 @@ function Header() {
   const navigate = useNavigate()
   const authStatus = useSelector((state) => state.auth?.status)
 
-  console.log("authStatus: ", authStatus);
 
 
   const navItems = [
@@ -44,15 +43,14 @@ function Header() {
   ]
 
   return (
-    <header className=''>
-      <Container>
-        <nav>
+    <header className='w-full h-14 hidden md:block bg-green-400'>
+        <nav className='flex justify-around items-center h-full'>
           <div>
             <Link to={'/'}>
               <Logo />
             </Link>
           </div>
-          <ul>
+          <ul className='flex justify-center items-center gap-4'>
             {
               navItems.map((item) => (
                 item.active ? (
@@ -72,7 +70,6 @@ function Header() {
             }
           </ul>
         </nav>
-      </Container>
     </header>
   )
 }

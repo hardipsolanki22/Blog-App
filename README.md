@@ -1,6 +1,6 @@
 # BlogApp
 
-This is a Blog Application built with React, Redux, and Appwrite. It allows users to sign up, log in, create posts, and manage their content.
+This is a Blog Application built with React, Redux, and Appwrite (Backend as a Service). It allows users to sign up, log in, create posts, and manage their content.
 
 ## Project Structure
 .env .gitignore eslint.config.js index.html package.json public/ README.md src/ App.jsx appWrite/ auth.js config.js assets/ components/ AuthLatout.jsx Button.jsx container/ Container.jsx Footer/ Footer.jsx Header/ Header.jsx LogoutBtn.jsx Input.jsx Login.jsx Logo.jsx PostCart.jsx PostForm/ PostForm.jsx Select.jsx Signup.jsx envImport/ conf.js featured/ auth/ post/ index.css Input.jsx main.jsx pages/ store/ store.js vite.config.js
