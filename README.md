@@ -43,3 +43,6 @@ This is a Blog Application built with React, Redux, and Appwrite (Backend as a S
 
 This project is licensed under the Chai Aur Code YouTube channel.
 
+## Author 
+Hardip Solanki
+

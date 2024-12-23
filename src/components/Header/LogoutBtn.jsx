@@ -20,7 +20,7 @@ function LogoutBtn() {
   }
   return (
     <>
-      <button onClick={logoutHandler}>
+      <button onClick={logoutHandler} className='duration-200 hover:bg-blue-100 rounded-full'>
         Logout
       </button>
     </>

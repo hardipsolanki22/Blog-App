@@ -115,12 +115,14 @@ function PostForm({ post }) {
     }
 
     return (
-        <div className='w-full bg-gray-600 text-black'>
-            <div>
-                <h2>PostForm</h2>
-                {error && <p className='text-red-600'>{error}</p>}
+    <div className='w-auto flex justify-center items-center m-2'>
+        <div className='w-auto md:max-w-lg bg-white text-black 
+        flex flex-col items-center justify-center p-2 md:p-4 rounded-lg shadow-lg'>
+            <div className='flex justify-center items-center'>
+                <h2 className='font-semibold'>PostForm</h2>
+                {error && <p className='text-red-600 my-2'>{error}</p>}
             </div>
-            <form onSubmit={postHandler} method='post'>
+            <form onSubmit={postHandler} method='post' className='w-full '>
                 <Input
                     type="text"
                     placeholder="Enter Title"
@@ -128,6 +130,8 @@ function PostForm({ post }) {
                     label="Title: "
                     value={formData.title}
                     onChange={handleChange}
+                    className="border w-full text-base px-2 py-2 focus:outline-none focus:border-gray-600"
+
                 />
                 <Input
                     type="text"
@@ -136,6 +140,8 @@ function PostForm({ post }) {
                     label="Slug: "
                     value={formData.slug}
                     readOnly={true}
+                    className="border w-full text-base px-2 py-2 focus:outline-none focus:border-gray-600"
+
                 />
                 <Input
                     type="text"
@@ -144,8 +150,11 @@ function PostForm({ post }) {
                     label="Content: "
                     value={formData.content}
                     onChange={handleChange}
+                    className="border w-full text-base px-2 py-2 focus:outline-none focus:border-gray-600"
+
                 />
-                {post && post.featuredimage ? (<div>
+                {post && post.featuredimage ? (
+                    <div className='sm:max-w-56  flex justify-center items-center p-2  bg-slate-200 rounded-md'>
                     <img
                         src={postService.getFilePreview(post.featuredimage)}
                         alt={"Feartured"}
@@ -158,6 +167,8 @@ function PostForm({ post }) {
                     label="FeaturedImage: "
                     accept="image/png, image.gpeg image/jpg image/gif"
                     onChange={handleChange}
+                    className="w-auto text-base px-2 py-2"
+
                 />
                 <Select
                     opations={["active", "inactive"]}
@@ -165,12 +176,15 @@ function PostForm({ post }) {
                     name="status"
                     value={formData.status}
                     onChange={handleChange}
+                    className="border w-auto text-base px-2 py-2 mb-16 md:mb-6"
+
                 />
-                <Button type='submit' onClick={postHandler}>
+                <Button type='submit' onClick={postHandler} className='bg-gray-500 w-full text-center'>
                     {post ? "Update" : "Submit"}
                 </Button>
             </form>
         </div>
+    </div>
     )
 }
 

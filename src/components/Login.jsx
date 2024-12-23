@@ -12,7 +12,6 @@ function Login() {
     const navigate = useNavigate()
 
     const [error, setError] = useState("")
-    const [loading, setLoading] = useState(false)
     const [values, setValues] = useState({})
 
     const handleChange = (e) => {
@@ -30,7 +29,6 @@ function Login() {
         e.preventDefault()
         try {
             setError("")
-            setLoading(true)
             const session = await authService.login({ email: values.email, password: values.password })
             console.log(`session: ${JSON.stringify(session)}`);
 
@@ -44,18 +42,14 @@ function Login() {
             }
         } catch (error) {
             setError(error.message)
-        } finally {
-            setLoading(false)
-        }
-
-
+        } 
     }
 
 
     return (
-        <div className='w-full h-auto bg-slate-700 flex flex-col justify-center items-center text-black'>
-            <div className='w-auto md:w-[40%] bg-white rounded-md my-4'>
-                <div className='flex flex-col justify-center items-center'>
+        <div className='w-auto flex flex-col justify-center items-center '>
+            <div className='w-auto md:max-w-lg bg-white  text-black rounded-xl my-4 p-4 md:p-10'>
+                <div className='flex flex-col justify-center items-center mx-4'>
                     <h2 className='font-semibold my-4'>Login Your Acount</h2>
                     <p>
                         Do you have no account
@@ -65,7 +59,7 @@ function Login() {
                     </p>
                 </div>
                 {error && <p className='text-red-600 m-2 text-center'>{error}</p>}
-                <form onSubmit={loginHandler} className='w-full p-4'>
+                <form onSubmit={loginHandler} className='w-full md:p-4 '>
                     <Input
                         type="text"
                         placeholder="Enter Email"
@@ -85,12 +79,9 @@ function Login() {
                         onChange={(e) => handleChange(e)}
                         className="border w-full text-base px-2 py-2 focus:outline-none focus:border-gray-600"
                     />
-                    {!loading ? (
-                        <Button type='submit' className='bg-gray-600 w-full text-center'>
+                        <Button type='submit' className='bg-gray-500 w-full text-center'>
                             Login
                         </Button>
-                    ) : <p>Loading</p>
-                    }
                 </form>
             </div>
 

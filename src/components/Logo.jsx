@@ -1,9 +1,13 @@
 import React from 'react'
 
-function Logo() {
+function Logo({width = "100px"}) {
   return (
-    <div>
-      LOGO{/* <img src="" alt="" />  */}
+    <div  className={`w-${width}`}>
+      {/* <img 
+      src="https://cdn-icons-png.flaticon.com/512/3959/3959542.png"
+       alt="logo"
+        />  */}
+        LOGO
     </div>
   )
 }

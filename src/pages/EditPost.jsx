@@ -24,7 +24,7 @@ function EditPost() {
     }, [slug, navigate])
 
   return (post ? (
-    <div>
+    <div className=' w-full flex justify-center items-center'>
         <Container>
         <PostForm post={post} />
         </Container>

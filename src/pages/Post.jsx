@@ -22,7 +22,7 @@ function Post() {
           if (post) setPost(post)
           else navigate("/")
         })
-      setLoader(false)
+        .finally(() => setLoader(false))
     } else {
       navigate("/")
     }
@@ -41,37 +41,38 @@ function Post() {
 
 
   return !loader ? (<div>
-    <Container>
-      <div>
-        <div>
+    <div className='flex justify-center items-center'>
+      <Container>
+        <div className='w-auto flex justify-center items-center my-1 mx-4 p-10 bg-white'>
           <img
             src={post.featuredimage && postService.getFilePreview(post?.featuredimage)}
             alt={post.title}
           />
         </div>
-        <div>
-          <p>{post.title}</p>
-          <p>{post.content}</p>
-        </div>
-        {isAuth &&
+        <div className='w-auto h-full flex justify-center flex-col my-2 mx-4 bg-white
+        p-4 text-black'>
           <div>
-            <div>
-              <Link to={`/edit-posts/${post.$id}`}>
-                <Button>
-                  Edit
-                </Button>
-              </Link>
-              <Button onClick={deleteHandler}>
-                Delete
-              </Button>
-            </div>
+            <p className='my-3 font-semibold'>{post.title}</p>
+            <p>{post.content}</p>
           </div>
+          {isAuth &&
+              <div className='flex justify-center items-center mt-6'>
+                <Link to={`/edit-posts/${post.$id}`}>
+                  <Button className='bg-gray-600 text-center mx-4 text-black'>
+                    Edit
+                  </Button>
+                </Link>
+                <Button onClick={deleteHandler} className='bg-gray-600  text-center'>
+                  Delete
+                </Button>
+            </div>
 
-        }
-      </div>
-    </Container>
+          }
+        </div>
+      </Container>
+    </div>
   </div>) : (<>
-    <h1>Loding...</h1>
+    <h1 className='text-black font-semibold m-4 text-center'>Loding...</h1>
   </>)
 }
 

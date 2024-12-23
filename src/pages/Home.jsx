@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Container from '../components/container/Container'
 import postSevice from '../appWrite/config'
-import PostCard from '../components/PostCart'
+import PostCart from '../components/PostCart'
 import { useSelector } from 'react-redux'
 
 function Home() {
@@ -12,34 +12,40 @@ function Home() {
     const isLogedIn = useSelector(state => state.auth.status)
 
     useEffect(() => {
+        setLoader(true)
         postSevice.getPosts()
             .then((posts) => {
                 if (posts) {
                     setPosts(posts.documents)
                 }
             })
-        setLoader(false)
+            .finally(() => setLoader(false))
     }, [])
 
 
     if (isLogedIn) {
         return (
-            !loader ? (<div>
+            !loader ? (
+            <div className='w-full flex justify-center items-center mx-auto'>
                 <Container>
-                    {posts.map((post) => (
-                        <div key={post.$id}>
-                            <PostCard {...post} />
+                   <div className='flex flex-col md:flex-row justify-center items-center p-4'>
+                   {posts.map((post) => (
+                        <div key={post.$id} className='h-auto w-full m-4 flex justify-center items-center'>
+                            <PostCart {...post} />
                         </div>
                     ))}
+                   </div>
                 </Container>
-            </div>) : (<>
-                <h1 className='text-black text-2xl'>Loding...</h1>
-            </>)
+            </div>
+           
+        ) : (<div>
+                <h1 className='text-black font-semibold text-center m-4'>Loding...</h1>
+            </div>)
         )
     } else {
         return (
             <>
-                <h1 className='text-red-600 font-semibold'>Login to See Posts</h1>
+                <h1 className='text-red-600 font-semibold text-center m-4'>Login to See Posts</h1>
             </>
         )
     }

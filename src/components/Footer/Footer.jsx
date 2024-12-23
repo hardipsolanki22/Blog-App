@@ -4,14 +4,9 @@ import Logo from '../Logo'
 
 function Footer() {
   return (
-    <footer className="w-screen  bg-slate-500 px-4 py-6 h-auto flex
-    justify-center flex-col md:flex-row md:justify-around 
-    items-center flex-wrap border-t-2 border-black"
+    <footer className="relative overflow-hidden py-10 bg-gray-400 border border-t-2 border-t-black"
    >
-       <div className="w-auto flex flex-col justify-between h-full ">
-           <div className="w-36">
-              <Logo width={'100px'} />
-           </div>
+       <div className="w-screen flex flex-col justify-between h-full ">
            <div className="px-4">
                <p>Copyright 2024. All Rights Reserved by DevUI.</p>
            </div>

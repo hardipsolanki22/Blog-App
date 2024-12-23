@@ -8,7 +8,7 @@ function Signup() {
 
     const [values, setValues] = useState({})
     const [error, setError] = useState("")
-    const [loading, setLoading] = useState(false)
+    const [loader, setLoder] = useState(null)
     const navigate = useNavigate()
 
     const handleChange = (e) => {
@@ -19,10 +19,10 @@ function Signup() {
     }
 
     const signupHandler = async (e) => {
+        setLoder(true)
         e.preventDefault()
         try {
             setError("")
-            setLoading(true)
             const userData = await authService.createAccount({
                 email: values.email,
                 password: values.password, name: values.name
@@ -30,17 +30,16 @@ function Signup() {
             if (userData) {
                 navigate('/login')
             }
+            setLoder(false)
         } catch (error) {
             setError(error.message)
-        } finally {
-            setLoading(false)
-        }
+        } 
     }
 
     return (
-        <div className='w-auto flex flex-col justify-center items-center bg-slate-700 text-white'>
-            <div className='w-auto md:w-[40%] bg-white text-black rounded-md my-4'>
-                <div className='mx-2 flex flex-col justify-center items-center'>
+        <div className='w-auto flex flex-col justify-center items-center'>
+            <div className='w-auto md:max-w-lg bg-white text-black rounded-lg my-4 p-4 md:p-10'>
+                <div className='flex flex-col justify-center items-center'>
                     <h2 className='my-4 font-semibold '>Signup Your Acount</h2>
                     <p>
                         Do you have account
@@ -50,7 +49,7 @@ function Signup() {
                     </p>
                 </div>
                 {error && <p className='text-red-600 m-2 text-center'>{error}</p>}
-                <form onSubmit={signupHandler} method='post' className='w-full p-4  '>
+                <form onSubmit={signupHandler} method='post' className='w-full md:p-4  '>
                     <Input
                         type="text"
                         placeholder="Enter name"
@@ -78,12 +77,9 @@ function Signup() {
                         onChange={(e) => handleChange(e)}
                         className="border w-full text-base px-4 py-2 focus:outline-none focus:border-gray-600"
                     />
-                    {!loading ? (
-                        <Button type='submit' className='bg-gray-600 w-full text-center'>
+                        <Button type='submit' di className='bg-gray-600 w-full text-center' disabled={loader}>
                             Signup
                         </Button>
-                    ) : <p>Loading</p>
-                    }
                 </form>
             </div>
         </div>

@@ -9,7 +9,6 @@ import { Outlet } from 'react-router-dom'
 
 function App() {
   const [loading, setLoading] = useState(true)
-  const [error , setError] = useState("")
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -21,25 +20,21 @@ function App() {
         dispatch(logout())
       }
     })
-    .catch((error) => {
-      setError(error)
-    })
     .finally(() => setLoading(false))
   }, [])
-
-
-  console.log("error: ", error);
   
 
   return !loading ? (
-    <div className='w-full'>
-      <div>
+    <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
+      <div className='w-full block'>
       <Header/>
+       <main>
        <Outlet/>
+       </main>
       <Footer/>
       </div>
     </div>
-  ) : <> <h1>Loading</h1> </>;
+  ) : <div> <h1>Loading</h1> </div>;
 }
 
 export default App
