@@ -2,12 +2,19 @@ import React, { useEffect, useState } from 'react'
 import Container from '../components/container/Container'
 import postService from '../appWrite/config'
 import PostCart from '../components/PostCart'
+import conf from '../envImport/conf'
 
 function AllPosts() {
 
     const [posts, setPosts] = useState([])
     const [loader, setLoader] = useState(true)
 
+    console.log('appurl: ', JSON.stringify(conf.appWriteUrl));
+    console.log('projectId: ', JSON.stringify(conf.appWriteProjectId));
+    console.log('collectId ', JSON.stringify(conf.appWriteCollectionId));
+    console.log('databaseId: ', JSON.stringify(conf.appWriteDataBaseId));
+    console.log('bucketId: ', JSON.stringify(conf.appWriteBucketId));
+    
 
     useEffect(() => {
         postService.getPosts([])
