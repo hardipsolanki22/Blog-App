@@ -74,7 +74,8 @@ function Login() {
                         onChange={(e) => handleChange(e)}
                         className="border w-full text-base px-2 py-2 focus:outline-none focus:border-gray-600"
                     />
-                        <Button type='submit' className='bg-gray-500 w-full text-center'>
+                        <Button type='submit' 
+                        className='bg-gray-500 w-full text-center focus:outline-none'>
                             Login
                         </Button>
                 </form>

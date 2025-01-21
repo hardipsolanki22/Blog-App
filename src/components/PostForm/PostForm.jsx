@@ -179,7 +179,8 @@ function PostForm({ post }) {
                     className="border w-auto text-base px-2 py-2 mb-16 md:mb-6"
 
                 />
-                <Button type='submit' onClick={postHandler} className='bg-gray-500 w-full text-center'>
+                <Button type='submit' onClick={postHandler} 
+                className='bg-gray-500 w-full text-center focus:outline-none'>
                     {post ? "Update" : "Submit"}
                 </Button>
             </form>

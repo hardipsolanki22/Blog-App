@@ -77,7 +77,9 @@ function Signup() {
                         onChange={(e) => handleChange(e)}
                         className="border w-full text-base px-4 py-2 focus:outline-none focus:border-gray-600"
                     />
-                        <Button type='submit' di className='bg-gray-600 w-full text-center' disabled={loader}>
+                        <Button type='submit'
+                        className='bg-gray-600 w-full text-center focus:outline-none' 
+                        disabled={loader}>
                             Signup
                         </Button>
                 </form>
