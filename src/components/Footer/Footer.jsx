@@ -4,7 +4,7 @@ import Logo from '../Logo'
 
 function Footer() {
   return (
-    <footer className="relative overflow-hidden py-10 bg-gray-400 border border-t-2 border-t-black"
+    <footer className="relative bottom-0 overflow-hidden py-10 bg-gray-400 border border-t-2 border-t-black"
    >
        <div className="w-screen flex flex-col justify-between h-full ">
            <div className="px-4">

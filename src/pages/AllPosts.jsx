@@ -21,7 +21,7 @@ function AllPosts() {
 
     return !loader ? (
 
-        <div className='w-full flex justify-center items-center mx-auto'>
+        <div className='w-full min-h-screen flex justify-center items-center mx-auto'>
             <Container>
                 <div className='flex flex-col md:flex-row justify-center items-center p-4'>
                     {posts.map((post) => (

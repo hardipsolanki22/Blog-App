@@ -21,17 +21,12 @@ function Login() {
         }))
     }
 
-    console.log(`values : ${JSON.stringify(values)}`);
-    console.log(`error : ${JSON.stringify(error)}`);
-
 
     const loginHandler = async (e) => {
         e.preventDefault()
         try {
             setError("")
             const session = await authService.login({ email: values.email, password: values.password })
-            console.log(`session: ${JSON.stringify(session)}`);
-
             if (session) {
                 const userData = await authService.getCurrentUser()
                 console.log(`userData: ${JSON.stringify(userData)}`);
@@ -47,7 +42,7 @@ function Login() {
 
 
     return (
-        <div className='w-auto flex flex-col justify-center items-center '>
+        <div className='w-auto flex flex-col justify-center items-center h-screen overflow-y-auto'>
             <div className='w-auto md:max-w-lg bg-white  text-black rounded-xl my-4 p-4 md:p-10'>
                 <div className='flex flex-col justify-center items-center mx-4'>
                     <h2 className='font-semibold my-4'>Login Your Acount</h2>
@@ -61,7 +56,7 @@ function Login() {
                 {error && <p className='text-red-600 m-2 text-center'>{error}</p>}
                 <form onSubmit={loginHandler} className='w-full md:p-4 '>
                     <Input
-                        type="text"
+                        type="email"
                         placeholder="Enter Email"
                         name="email"
                         label="Email: "

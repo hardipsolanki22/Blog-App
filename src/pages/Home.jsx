@@ -44,9 +44,9 @@ function Home() {
         )
     } else {
         return (
-            <>
+            <div className='h-screen overflow-y-auto flex justify-center items-center'>
                 <h1 className='text-red-600 font-semibold text-center m-4'>Login to See Posts</h1>
-            </>
+            </div>
         )
     }
 
