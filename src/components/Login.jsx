@@ -60,6 +60,7 @@ function Login() {
                         placeholder="Enter Email"
                         name="email"
                         label="Email: "
+                        required
                         value={values.email}
                         onChange={(e) => handleChange(e)}
                         className="border w-full text-base px-2 py-2 focus:outline-none focus:border-gray-600"
@@ -72,6 +73,7 @@ function Login() {
                         label="password: "
                         value={values.password}
                         onChange={(e) => handleChange(e)}
+                        required
                         className="border w-full text-base px-2 py-2 focus:outline-none focus:border-gray-600"
                     />
                         <Button type='submit' 

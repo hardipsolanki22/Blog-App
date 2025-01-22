@@ -128,6 +128,7 @@ function PostForm({ post }) {
                     placeholder="Enter Title"
                     name="title"
                     label="Title: "
+                    required
                     value={formData.title}
                     onChange={handleChange}
                     className="border w-full text-base px-2 py-2 focus:outline-none focus:border-gray-600"
@@ -138,19 +139,21 @@ function PostForm({ post }) {
                     placeholder="slug"
                     name="slug"
                     label="Slug: "
+                    required
                     value={formData.slug}
                     readOnly={true}
                     className="border w-full text-base px-2 py-2 focus:outline-none focus:border-gray-600"
 
                 />
-                <Input
+                <textarea
                     type="text"
                     placeholder="Enter Description"
                     name="content"
                     label="Content: "
                     value={formData.content}
                     onChange={handleChange}
-                    className="border w-full text-base px-2 py-2 focus:outline-none focus:border-gray-600"
+                    required
+                    className="border w-full text-base px-2 py-2 h-36 focus:outline-none focus:border-gray-600"
 
                 />
                 {post && post.featuredimage ? (
@@ -167,6 +170,7 @@ function PostForm({ post }) {
                     label="FeaturedImage: "
                     accept="image/png, image.gpeg image/jpg image/gif"
                     onChange={handleChange}
+                    required
                     className="w-auto text-base px-2 py-2"
 
                 />

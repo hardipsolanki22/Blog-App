@@ -55,6 +55,7 @@ function Signup() {
                         placeholder="Enter name"
                         name="name"
                         label="Name: "
+                        required
                         value={values.name}
                         onChange={(e) => handleChange(e)}
                         className="border w-full text-base px-2 py-2 focus:outline-none focus:border-gray-600"
@@ -64,6 +65,7 @@ function Signup() {
                         placeholder="Enter Email"
                         name="email"
                         label="Email: "
+                        required
                         value={values.email}
                         onChange={(e) => handleChange(e)}
                         className="border w-full text-base px-4 py-2 focus:outline-none focus:border-gray-600"
@@ -73,6 +75,7 @@ function Signup() {
                         placeholder="Enter Password"
                         name="password"
                         label="Password: "
+                        required
                         value={values.password}
                         onChange={(e) => handleChange(e)}
                         className="border w-full text-base px-4 py-2 focus:outline-none focus:border-gray-600"
